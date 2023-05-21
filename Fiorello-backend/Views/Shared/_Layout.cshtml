@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject ILayoutService _layoutService;
+
+@{
+    LayoutVM datas = _layoutService.GetAllDatas();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,7 +31,7 @@
                 <div class="col-12">
                     <nav class="navbar navbar-expand-lg d-flex d-lg-block justify-content-between d-xl-flex navbar-light py-3 py-lg-0">
                         <a class="navbar-brand" href="#">
-                            <img src="~/img/logo.png" alt="" id="logo">
+                            <img src="~/img/@datas.SettingDatas["HeaderLogo"]" alt="" id="logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -95,12 +101,14 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item my-auto shop-cart">
+                                  <a asp-controller="Cart" asp-action="Index">
                                     <i class="fas fa-shopping-bag"></i>
-                                    <sup class="rounded-circle">0</sup>
+                                    <sup class="rounded-circle">@datas.BasketCount</sup>
                                     <span>CART ($0)</span>
                                     <ul class="list-unstyled py-3">
                                         <li class="">No products in the cart.</li>
                                     </ul>
+                                  </a>
                                 </li>
                             </ul>
                         </div>
@@ -252,6 +260,7 @@
                             <li><a class="text-black-50" href="">Returns & Refunds</a></li>
                             <li><a class="text-black-50" href="">Online Stores</a></li>
                             <li><a class="text-black-50" href="">Terms & Conditions</a></li>
+                            <li><a class="text-black-50" href="">@datas.SettingDatas["Phone"]</a></li>
                         </ul>
                     </div>
                 </div>

@@ -13,7 +13,12 @@
                 <h6>@product.Name</h6>
             </div>
             <div class="price">
-                <span class="text-black-50">Add to cart</span>
+                <span class="text-black-50">
+                    <form id="basket-form" data-id="@product.Id">
+                        <button type="submit" class="text-white-50 btn btn-success">Add to cart</button>
+                    </form>
+                </span>
+              
                 <span class="text-black-50">$@product.Price.ToString("0.#####")</span>
             </div>
         </div>

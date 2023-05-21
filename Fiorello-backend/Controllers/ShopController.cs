@@ -1,17 +1,21 @@
 ﻿using Fiorello_backend.Data;
 using Fiorello_backend.Models;
+using Fiorello_backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Fiorello_backend.Controllers
 {
     public class ShopController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IHttpContextAccessor _accessor;
 
-        public ShopController(AppDbContext context)
+        public ShopController(AppDbContext context, IHttpContextAccessor accessor)
         {
             _context = context;
+            _accessor = accessor;
         }
 
         public async Task<IActionResult> Index()

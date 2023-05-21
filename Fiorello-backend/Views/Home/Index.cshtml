@@ -85,27 +85,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach (var product in Model.Products)
-                {
-                         <div class="col-sm-6 col-md-4 col-lg-3 mt-3">
-                        <div class="product-item text-center" data-id="@product.CategoryId">
-                            <div class="img">
-                                <a asp-controller="Product" asp-action="Index" asp-route-id="@product.Id">
-                                    <img src="~/img/@product.Images?.Where(m=>m.IsMain).FirstOrDefault().Image" class="img-fluid" alt="">
-                                </a>
-                            </div>
-                            <div class="title mt-3">
-                                <h6>@product.Name</h6>
-                            </div>
-                            <div class="price">
-                                <span class="text-black-50">Add to cart</span>
-                                <span class="text-black-50">$@product.Price.ToString("0.#####")</span>
-                            </div>
-                        </div>
-                    </div>
-                }
-               
-                    
+                     <partial name="_ProductsPartial" model="@Model.Products"/>
                 </div>
             </div>
         </section>
@@ -299,11 +279,9 @@
 
     <!-- MAIN END -->
 
-
-
-@*    @section Scripts{
-            <script src="~/owlcarousel/owl.carousel.min.js"></script>
-    }*@
+    @section Scripts{
+            <script src="~/js/basket.js"></script>
+    }
 
 
 

@@ -20,6 +20,7 @@ namespace Fiorello_backend.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<Expert> Experts { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,8 +46,30 @@ namespace Fiorello_backend.Data
                 Id = 3,
                 FullName = "Musa Afandiyev",
                 Age = 19,
-            }
-        );
+            });
+
+
+
+            modelBuilder.Entity<Setting>().HasData(
+            new Setting
+            {
+                Id = 1,
+                Key = "HeaderLogo",
+                Value = "logo.png",
+            },
+            new Setting
+            {
+                Id = 2,
+                Key = "Phone",
+                Value = "7456834857634",
+            },
+            new Setting
+            {
+                Id = 3,
+                Key = "Email",
+                Value = "fiorello@gmail.com",
+            });
+
         }
     }
 }
