@@ -22,32 +22,39 @@
 
     })
 
+
+    //delete product from basket
+
+    $(document).on("submit", "#basket-delete-form", function (e) {
+        e.preventDefault();
+
+        let productId = $(this).attr("data-id");
+
+        $(this).parent().parent().remove();
+
+        let data = { id: productId };
+
+        $.ajax({
+            url: "cart/delete",
+            type: "Post",
+            data: data,
+            success: function (res) {
+                $("sup.rounded-circle").text(res.count);
+                if (res.count != 0) {
+                    $("#total-price").text(res.total + "₼");
+                } else {
+                    $("#total-price").addClass("d-none");
+                }
+                
+                
+            }
+
+        })
+
+    })
+
     
 
-    //$(document).on("click", ".show-more-btn", function () {
-
-    //    let parent = $("#parent-elem");
-
-    //    let skiptCount = $(parent).children().length;
-
-    //    let productsCount = $("#products").attr("data-count");
-
-
-    //    $.ajax({
-    //        url: `shop/showmoreorless?skip=${skiptCount}`,
-    //        type: "Get",
-    //        success: function (res) {
-    //            debugger
-    //            $(parent).append(res);
-    //            skiptCount = $(parent).children().length;
-    //            if (skiptCount >= productsCount) {
-    //                $(".show-more-btn").addClass("d-none")
-    //                $(".show-less-btn").removeClass("d-none")
-    //            }
-    //        }
-
-    //    })
-    //})
 
 
 

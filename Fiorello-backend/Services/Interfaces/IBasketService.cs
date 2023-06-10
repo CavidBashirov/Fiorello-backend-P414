@@ -1,4 +1,5 @@
 ﻿using Fiorello_backend.Models;
+using Fiorello_backend.Responses;
 using Fiorello_backend.ViewModels;
 
 namespace Fiorello_backend.Services.Interfaces
@@ -7,7 +8,7 @@ namespace Fiorello_backend.Services.Interfaces
     {
         List<BasketVM> GetAll();
         void AddProduct(List<BasketVM> basket, Product product);
-        void DeleteProduct(int? id);
+        Task<BasketDeleteResponse> DeleteProduct(int? id);
         int GetCount();
     }
 }

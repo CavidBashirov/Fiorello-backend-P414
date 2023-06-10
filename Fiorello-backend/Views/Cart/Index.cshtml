@@ -31,7 +31,7 @@
                         <td>@item.Count</td>
                         <td>@item.TotalPrice.ToString("0.#####") ₼</td>
                         <td>
-                            <form method="post" asp-action="Delete" asp-route-id="@item.Id">
+                            <form id="basket-delete-form" data-id="@item.Id">
                                     <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                            
@@ -43,7 +43,7 @@
             </tbody>
         </table>
 
-            <h1>Total : @grandTotal.ToString("0.#####") ₼</h1>
+            <h1 id="total-price">Total : @grandTotal.ToString("0.#####") ₼</h1>
      
  
         </div>
@@ -56,4 +56,8 @@
     }
 
 </div>
+
+@section Scripts{
+    <script src="~/js/basket.js"></script>
+}
 

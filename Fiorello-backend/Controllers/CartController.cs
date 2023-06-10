@@ -3,24 +3,23 @@ using Fiorello_backend.Models;
 using Fiorello_backend.Services.Interfaces;
 using Fiorello_backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Fiorello_backend.Controllers
 {
     public class CartController : Controller
     {
-        private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _accessor;
         private readonly IBasketService _basketService;
+        private readonly IProductService _productService;
 
-        public CartController(AppDbContext context,
+        public CartController(IProductService productService,
                               IHttpContextAccessor accessor,
                               IBasketService basketService)
         {
-            _context = context;
             _accessor = accessor;
             _basketService = basketService;
+            _productService = productService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,7 +32,7 @@ namespace Fiorello_backend.Controllers
 
                 foreach (var item in basketDatas)
                 {
-                    var dbProduct = await _context.Products.Include(m => m.Images).FirstOrDefaultAsync(m => m.Id == item.Id);
+                    var dbProduct = await _productService.GetByIdWithImagesAsync(item.Id);
 
                     if(dbProduct != null)
                     {
@@ -62,7 +61,7 @@ namespace Fiorello_backend.Controllers
         {
             if (id is null) return BadRequest();
 
-            Product product = await _context.Products.FindAsync(id);
+            Product product = await _productService.GetByIdAsync(id);
 
             if (product is null) return NotFound();
 
@@ -74,13 +73,10 @@ namespace Fiorello_backend.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public IActionResult DeleteProductFromBasket(int? id)
+        public async Task<IActionResult> DeleteProductFromBasket(int? id)
         {
-            _basketService.DeleteProduct(id);
-            return RedirectToAction(nameof(Index));
-
+            return Ok(await _basketService.DeleteProduct(id));
         }
     }
 }

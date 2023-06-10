@@ -21,10 +21,7 @@ namespace Fiorello_backend.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Slider> sliders = await _context.Sliders.ToListAsync();
-
-            SliderInfo sliderInfo = await _context.SliderInfos.Where(m=>!m.SoftDelete).FirstOrDefaultAsync();
-
+           
             IEnumerable<Blog> blogs = await _context.Blogs.Where(m => !m.SoftDelete).OrderByDescending(m=>m.Id).Take(3).ToListAsync();
 
             IEnumerable<Category> categories = await _context.Categories.Where(m => !m.SoftDelete).ToListAsync();
@@ -35,8 +32,6 @@ namespace Fiorello_backend.Controllers
 
             HomeVM model = new()
             {
-                SliderInfo = sliderInfo,
-                Sliders = sliders,
                 Blogs = blogs,
                 Categories = categories,
                 Products = products,

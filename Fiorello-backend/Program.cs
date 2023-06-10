@@ -18,6 +18,10 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ILayoutService, LayoutService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ISliderService, SliderService>();
+builder.Services.AddScoped<ISettingService, SettingService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
 
 
 var app = builder.Build();
