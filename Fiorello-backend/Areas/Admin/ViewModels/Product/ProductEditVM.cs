@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Fiorello_backend.Areas.Admin.ViewModels.Product
 {
-    public class ProductCreateVM
+    public class ProductEditVM
     {
         [Required]
         public string Name { get; set; }
@@ -13,7 +13,7 @@ namespace Fiorello_backend.Areas.Admin.ViewModels.Product
         public string Price { get; set; }
         public int CategoryId { get; set; }
         public int DiscountId { get; set; }
-        [Required]
-        public List<IFormFile> Images { get; set; }
+        public List<IFormFile> NewImages { get; set; }
+        public List<ProductImage> Images { get; set; }
     }
 }

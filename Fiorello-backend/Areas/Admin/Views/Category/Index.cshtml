@@ -4,10 +4,17 @@
 }
 
 <div class="container my-3">
-    <h2 class="text-center">Sliders</h2>
-    <div class="create-btn ">
-        <a asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
-    </div>
+    <h2 class="text-center">Categories</h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("SuperAdmin"))
+        {
+            <div class="create-btn ">
+                <a asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
+            </div>
+        }
+    }
+  
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>

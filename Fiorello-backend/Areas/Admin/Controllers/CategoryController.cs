@@ -1,12 +1,14 @@
 ﻿using Fiorello_backend.Areas.Admin.ViewModels.Category;
 using Fiorello_backend.Data;
 using Fiorello_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fiorello_backend.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
@@ -37,6 +39,7 @@ namespace Fiorello_backend.Areas.Admin.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult Create()
         {
             return View();

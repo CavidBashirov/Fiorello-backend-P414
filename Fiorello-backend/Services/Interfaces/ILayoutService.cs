@@ -4,6 +4,6 @@ namespace Fiorello_backend.Services.Interfaces
 {
     public interface ILayoutService
     {
-        LayoutVM GetAllDatas();
+        Task<LayoutVM> GetAllDatas();
     }
 }

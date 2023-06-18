@@ -3,6 +3,7 @@ using Fiorello_backend.Data;
 using Fiorello_backend.Helpers;
 using Fiorello_backend.Models;
 using Fiorello_backend.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.IO;
 namespace Fiorello_backend.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class SliderController : Controller
     {
         private readonly IWebHostEnvironment _env;

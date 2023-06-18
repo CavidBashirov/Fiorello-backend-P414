@@ -14,5 +14,8 @@ namespace Fiorello_backend.Services.Interfaces
         ProductDetailVM GetMappedData(Product product);
         Task<int> GetCountAsync();
         Task CreateAsync(ProductCreateVM model);
+        Task DeleteImageByIdAsync(int id);
+        Task EditAsync(int productId, ProductEditVM model);
+        Task DeleteAsync(int id);
     }
 }

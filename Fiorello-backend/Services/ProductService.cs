@@ -95,11 +95,13 @@ namespace Fiorello_backend.Services
 
             images.FirstOrDefault().IsMain = true;
 
+            decimal decimalPrice = decimal.Parse(model.Price.Replace(".", ","));
+
             Product product = new()
             {
                 Name = model.Name,
                 Description = model.Description,
-                Price = model.Price,
+                Price = decimalPrice,
                 CategoryId = model.CategoryId,
                 DiscountId = model.DiscountId,
                 Images = images
@@ -107,6 +109,68 @@ namespace Fiorello_backend.Services
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteImageByIdAsync(int id)
+        {
+            ProductImage image = await _context.ProductImages.FirstOrDefaultAsync(m => m.Id == id);
+            _context.ProductImages.Remove(image);
+            await _context.SaveChangesAsync();
+
+            string path = Path.Combine(_env.WebRootPath, "img", image.Image);
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+
+        public async Task EditAsync(int productId, ProductEditVM model)
+        {
+            List<ProductImage> images = new();
+
+            var product = await GetByIdAsync(productId);
+
+            if(model.NewImages != null)
+            {
+                foreach (var item in model.NewImages)
+                {
+                    string fileName = Guid.NewGuid().ToString() + "_" + item.FileName;
+                    await item.SaveFileAsync(fileName, _env.WebRootPath, "img");
+                    images.Add(new ProductImage { Image = fileName, ProductId = productId });
+                }
+
+                await _context.ProductImages.AddRangeAsync(images);
+            }
+
+
+            decimal decimalPrice = decimal.Parse(model.Price.Replace(".", ","));
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.CategoryId = model.CategoryId;
+            product.DiscountId = model.DiscountId;
+            product.Price = decimalPrice;
+
+            await _context.SaveChangesAsync();
+
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var product = await _context.Products.Include(m=>m.Images).FirstOrDefaultAsync(m=>m.Id == id);
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            foreach (var item in product.Images)
+            {
+                string path = Path.Combine(_env.WebRootPath, "img", item.Image);
+
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
     }
 }
